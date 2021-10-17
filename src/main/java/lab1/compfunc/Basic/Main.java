@@ -23,7 +23,7 @@ public class Main {
         }else{
             DoubleOps.createThreads(doubNum);
             IntOps.createTreads(intNum);
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             double DresOfBinOperation = binaryMin.DoubleBinaryMin(DoubleOps.fResult,DoubleOps.gResult);
             int IresOfBinOperation = binaryMin.IntBinaryMin(IntOps.fResult, IntOps.gResult);
             System.out.println("Minimum of two double results is: " + DresOfBinOperation);

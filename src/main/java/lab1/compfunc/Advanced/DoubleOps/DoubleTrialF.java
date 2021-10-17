@@ -1,20 +1,25 @@
 package lab1.compfunc.Advanced.DoubleOps;
 
-public class DoubleOpsF extends Thread {
+public class DoubleTrialF extends Thread {
     private static double fResult;
 
     @Override
     public void run() {
+        double[] currArray = DoubleOps.getDoubleArray();
         for (int i = 0; i < 10; i++) {
-            if (DoubleOps.doubleArray[i] != 2) {
+            if (currArray[i] != 2) {
                 synchronized (this) {
                     try {
-                        setFResult(countF(DoubleOps.doubleArray[i]));
+                        setFResult(countF(currArray[i]));
                         System.out.println("Result of f(x) in " + i + " position: " + fResult);
                         DoubleOps.decrementCounter();
                         wait();
-                        if(DoubleOps.stop){
+                        if (DoubleOps.isStop()) {
                             break;
+                        }
+                        if (DoubleOps.isRestart()) {
+                            i = -1;
+                            currArray = DoubleOps.getDoubleArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -36,6 +41,9 @@ public class DoubleOpsF extends Thread {
     public static synchronized void setFResult(double value) {
         fResult = value;
     }
-    public static double getFResult() {return fResult;}
+
+    public static double getFResult() {
+        return fResult;
+    }
 
 }

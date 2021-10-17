@@ -1,11 +1,10 @@
 package lab1.compfunc.Advanced.BinaryFunc;
 
 import lab1.compfunc.Advanced.IntOps.IntOps;
-import lab1.compfunc.Advanced.IntOps.IntOpsF;
-import lab1.compfunc.Advanced.IntOps.IntOpsG;
+import lab1.compfunc.Advanced.IntOps.IntTrialF;
+import lab1.compfunc.Advanced.IntOps.IntTrialG;
 import lab1.compfunc.Advanced.Main;
-//import lab1.compfunc.Advanced.Message;
-import lab1.compfunc.Advanced.PeriodicMessage;
+import lab1.compfunc.Advanced.Message.MessagesClass;
 
 public class IntBinaryMin extends Thread {
     @Override
@@ -17,8 +16,8 @@ public class IntBinaryMin extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!PeriodicMessage.messageFlag) {
-                    int IntOfBinOperation = IntBinMin(IntOpsF.getFResult(), IntOpsG.getGResult());
+                if (!MessagesClass.isMessageFlag()) {
+                    int IntOfBinOperation = IntBinMin(IntTrialF.getFResult(), IntTrialG.getGResult());
                     System.out.println("Minimum of two integer results is: " + IntOfBinOperation);
                     IntOps.setCounter(2);
                     synchronized (Main.intFThread) {
@@ -31,15 +30,15 @@ public class IntBinaryMin extends Thread {
                     synchronized (this) {
                         try {
                             wait();
-                            if (!PeriodicMessage.stopComputation) {
+                            if (!MessagesClass.isStopComputation()) {
                                 synchronized (Main.intFThread) {
                                     Main.intFThread.notify();
                                 }
                                 synchronized (Main.intGThread) {
                                     Main.intGThread.notify();
                                 }
-                            }else{
-                                IntOps.stop = true;
+                            } else {
+                                IntOps.setStop(true);
                                 synchronized (Main.intFThread) {
                                     Main.intFThread.notify();
                                 }
@@ -60,5 +59,7 @@ public class IntBinaryMin extends Thread {
         System.out.println("binary operation thread between integer values stopped  " + interrupted());
     }
 
-    public int IntBinMin(int fRes, int gRes) {return Math.min(fRes, gRes);}
+    public int IntBinMin(int fRes, int gRes) {
+        return Math.min(fRes, gRes);
+    }
 }

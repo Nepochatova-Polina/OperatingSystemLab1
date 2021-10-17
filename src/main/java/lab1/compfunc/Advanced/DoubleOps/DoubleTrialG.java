@@ -1,20 +1,25 @@
 package lab1.compfunc.Advanced.DoubleOps;
 
-public class DoubleOpsG extends Thread {
+public class DoubleTrialG extends Thread {
     private static double gResult;
 
     @Override
     public void run() {
+        double[] currArray = DoubleOps.getDoubleArray();
         for (int i = 0; i < 10; i++) {
-            if (DoubleOps.doubleArray[i] != 2) {
+            if (currArray[i] != 2) {
                 synchronized (this) {
                     try {
-                        setGResult(countG(DoubleOps.doubleArray[i]));
+                        setGResult(countG(currArray[i]));
                         System.out.println("Result of g(x) in " + i + " position: " + gResult);
                         DoubleOps.decrementCounter();
                         wait();
-                        if(DoubleOps.stop){
+                        if (DoubleOps.isStop()) {
                             break;
+                        }
+                        if (DoubleOps.isRestart()) {
+                            i = -1;
+                            currArray = DoubleOps.getDoubleArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -29,7 +34,15 @@ public class DoubleOpsG extends Thread {
         System.out.println("G thread for double value stopped " + interrupted());
     }
 
-    public static double countG(double x) {return x * x * x + 8;}
-    public static synchronized void setGResult(double value) {gResult = value;}
-    public static double getGResult() {return gResult;}
+    public static double countG(double x) {
+        return x * x * x + 8;
+    }
+
+    public static synchronized void setGResult(double value) {
+        gResult = value;
+    }
+
+    public static double getGResult() {
+        return gResult;
+    }
 }
