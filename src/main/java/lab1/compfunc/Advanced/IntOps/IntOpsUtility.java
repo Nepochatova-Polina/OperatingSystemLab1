@@ -1,10 +1,9 @@
 package lab1.compfunc.Advanced.IntOps;
 
-import lab1.compfunc.Advanced.DoubleOps.DoubleOps;
 
-public class IntOps {
+public class IntOpsUtility {
     private static int counter = 2;
-    private static int[] intArray = {1, 5, 2, 8, 12, 44, 23, 9, 11, 30};
+    private static int[] intArray = {1, 5, 3, 8, 12, 44, 23, 9, 11, 30};
     private static boolean restart = false;
 
     public static int[] getIntArray() {
@@ -12,7 +11,7 @@ public class IntOps {
     }
 
     public static void setIntArray(int[] newArray) {
-        IntOps.intArray = newArray;
+        IntOpsUtility.intArray = newArray;
     }
 
     public static synchronized boolean isRestart() {
@@ -20,7 +19,7 @@ public class IntOps {
     }
 
     public static synchronized void setRestart(boolean restart) {
-        IntOps.restart = restart;
+        IntOpsUtility.restart = restart;
     }
 
 
@@ -29,7 +28,7 @@ public class IntOps {
     }
 
     public static void setStop(boolean stop) {
-        IntOps.stop = stop;
+        IntOpsUtility.stop = stop;
     }
 
     private static boolean stop = false;

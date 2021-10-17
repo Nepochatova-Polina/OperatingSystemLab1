@@ -1,7 +1,7 @@
 package lab1.compfunc.Advanced.Message;
 
-import lab1.compfunc.Advanced.DoubleOps.DoubleOps;
-import lab1.compfunc.Advanced.IntOps.IntOps;
+import lab1.compfunc.Advanced.DoubleOps.DoubleOpsUtility;
+import lab1.compfunc.Advanced.IntOps.IntOpsUtility;
 import lab1.compfunc.Advanced.Main;
 
 import java.util.Random;
@@ -11,7 +11,7 @@ public class PeriodicMessage extends Thread {
 
     @Override
     public void run() {
-        while (!DoubleOps.isStop() || !IntOps.isStop()) {
+        while (!DoubleOpsUtility.isStop() || !IntOpsUtility.isStop()) {
             try {
                 Thread.sleep(5000);
                 System.out.println("""
@@ -20,7 +20,7 @@ public class PeriodicMessage extends Thread {
                         (b)continue with promt
                         (c)stop
                         """);
-                MessagesClass.setMessageFlag(true);
+                MessagesUtility.setMessageFlag(true);
                 Scanner string = new Scanner(System.in);
                 String confirmString = string.nextLine();
 
@@ -35,8 +35,8 @@ public class PeriodicMessage extends Thread {
                     }
                     case "b", "B", "continue with promt", "Continue with prompt" -> {
                         newArray();
-                        DoubleOps.setRestart(true);
-                        IntOps.setRestart(true);
+                        DoubleOpsUtility.setRestart(true);
+                        IntOpsUtility.setRestart(true);
                         synchronized (Main.doubleBinThread) {
                             Main.doubleBinThread.notify();
                         }
@@ -44,11 +44,11 @@ public class PeriodicMessage extends Thread {
                             Main.intBinThread.notify();
                         }
                         Thread.sleep(1000);
-                        DoubleOps.setRestart(false);
-                        IntOps.setRestart(false);
+                        DoubleOpsUtility.setRestart(false);
+                        IntOpsUtility.setRestart(false);
                     }
                     case "c", "C", "stop", "Stop" -> {
-                        MessagesClass.setStopComputation(true);
+                        MessagesUtility.setStopComputation(true);
                         synchronized (Main.doubleBinThread) {
                             Main.doubleBinThread.notify();
                         }
@@ -66,7 +66,7 @@ public class PeriodicMessage extends Thread {
                         }
                     }
                 }
-                MessagesClass.setMessageFlag(false);
+                MessagesUtility.setMessageFlag(false);
                 Thread.sleep(3000);
 
             } catch (InterruptedException e) {
@@ -74,7 +74,7 @@ public class PeriodicMessage extends Thread {
             }
         }
         interrupt();
-        System.out.println("message thread stopped " + interrupted());
+        System.out.println("message thread stopped");
     }
 
     public static void newArray() {
@@ -85,8 +85,8 @@ public class PeriodicMessage extends Thread {
             intArr[i] = rand.nextInt(100);
             doubleArr[i] = rand.nextDouble(100);
         }
-        IntOps.setIntArray(intArr);
-        DoubleOps.setDoubleArray(doubleArr);
+        IntOpsUtility.setIntArray(intArr);
+        DoubleOpsUtility.setDoubleArray(doubleArr);
 
     }
 }

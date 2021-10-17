@@ -1,25 +1,25 @@
 package lab1.compfunc.Advanced.BinaryFunc;
 
-import lab1.compfunc.Advanced.DoubleOps.DoubleOps;
+import lab1.compfunc.Advanced.DoubleOps.DoubleOpsUtility;
 import lab1.compfunc.Advanced.DoubleOps.DoubleTrialF;
 import lab1.compfunc.Advanced.DoubleOps.DoubleTrialG;
 import lab1.compfunc.Advanced.Main;
-import lab1.compfunc.Advanced.Message.MessagesClass;
+import lab1.compfunc.Advanced.Message.MessagesUtility;
 
 public class DoubleBinaryMin extends Thread {
     @Override
     public void run() {
         while (!Main.doubleFThread.isInterrupted() && !Main.doubleGThread.isInterrupted()) {
-            if (DoubleOps.getCounter() == 0) {
+            if (DoubleOpsUtility.getCounter() == 0) {
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!MessagesClass.isMessageFlag()) {
+                if (MessagesUtility.isMessageFlag()) {
                     double DoubleOfBinOperation = DoubleBinMin(DoubleTrialF.getFResult(), DoubleTrialG.getGResult());
                     System.out.println("Minimum of two double results is: " + DoubleOfBinOperation);
-                    DoubleOps.setCounter(2);
+                    DoubleOpsUtility.setCounter(2);
                     synchronized (Main.doubleFThread) {
                         Main.doubleFThread.notify();
                     }
@@ -30,7 +30,7 @@ public class DoubleBinaryMin extends Thread {
                     synchronized (this) {
                         try {
                             wait();
-                            if (!MessagesClass.isStopComputation()) {
+                            if (MessagesUtility.isStopComputation()) {
                                 synchronized (Main.doubleFThread) {
                                     Main.doubleFThread.notify();
                                 }
@@ -38,7 +38,7 @@ public class DoubleBinaryMin extends Thread {
                                     Main.doubleGThread.notify();
                                 }
                             } else {
-                                DoubleOps.setStop(true);
+                                DoubleOpsUtility.setStop(true);
                                 synchronized (Main.doubleFThread) {
                                     Main.doubleFThread.notify();
                                 }
@@ -56,11 +56,11 @@ public class DoubleBinaryMin extends Thread {
 
         }
         interrupt();
-        System.out.println("binary operation thread between double values stopped " + interrupted());
+        System.out.println("binary operation thread between double values stopped ");
 
     }
 
-    public double DoubleBinMin(double fRes, double gRes) {
+    public static double DoubleBinMin(double fRes, double gRes) {
         return Math.min(fRes, gRes);
     }
 }

@@ -5,21 +5,21 @@ public class DoubleTrialG extends Thread {
 
     @Override
     public void run() {
-        double[] currArray = DoubleOps.getDoubleArray();
+        double[] currArray = DoubleOpsUtility.getDoubleArray();
         for (int i = 0; i < 10; i++) {
             if (currArray[i] != 2) {
                 synchronized (this) {
                     try {
                         setGResult(countG(currArray[i]));
                         System.out.println("Result of g(x) in " + i + " position: " + gResult);
-                        DoubleOps.decrementCounter();
+                        DoubleOpsUtility.decrementCounter();
                         wait();
-                        if (DoubleOps.isStop()) {
+                        if (DoubleOpsUtility.isStop()) {
                             break;
                         }
-                        if (DoubleOps.isRestart()) {
+                        if (DoubleOpsUtility.isRestart()) {
                             i = -1;
-                            currArray = DoubleOps.getDoubleArray();
+                            currArray = DoubleOpsUtility.getDoubleArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -31,7 +31,7 @@ public class DoubleTrialG extends Thread {
             }
         }
         interrupt();
-        System.out.println("G thread for double value stopped " + interrupted());
+        System.out.println("G thread for double value stopped ");
     }
 
     public static double countG(double x) {

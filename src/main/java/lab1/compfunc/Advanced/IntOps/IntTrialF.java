@@ -1,27 +1,25 @@
 package lab1.compfunc.Advanced.IntOps;
 
-import lab1.compfunc.Advanced.DoubleOps.DoubleOps;
-
 public class IntTrialF extends Thread {
     private static int fResult;
 
     @Override
     public void run() {
-        int[] currArray = IntOps.getIntArray();
+        int[] currArray = IntOpsUtility.getIntArray();
         for (int i = 0; i < 10; i++) {
             if (currArray[i] != 2) {
                 synchronized (this) {
                     try {
                         setFResult(countF(currArray[i]));
                         System.out.println("Result of f(x) in " + i + " position: " + fResult);
-                        IntOps.decrementCounter();
+                        IntOpsUtility.decrementCounter();
                         wait();
-                        if (IntOps.isStop()) {
+                        if (IntOpsUtility.isStop()) {
                             break;
                         }
-                        if (IntOps.isRestart()) {
+                        if (IntOpsUtility.isRestart()) {
                             i = -1;
-                            currArray = IntOps.getIntArray();
+                            currArray = IntOpsUtility.getIntArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -30,7 +28,7 @@ public class IntTrialF extends Thread {
             } else {
                 System.out.println("\nvalue " + currArray[i] + " is incorrect for f(x) function\n");
                 setFResult(100000000);
-                IntOps.decrementCounter();
+                IntOpsUtility.decrementCounter();
                 synchronized (this) {
                     try {
                         wait();
@@ -41,7 +39,7 @@ public class IntTrialF extends Thread {
             }
         }
         interrupt();
-        System.out.println("F thread for integer value stopped  " + interrupted());
+        System.out.println("F thread for integer value stopped");
     }
 
     public static int countF(int x) {

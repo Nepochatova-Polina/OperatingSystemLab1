@@ -5,21 +5,21 @@ public class IntTrialG extends Thread {
 
     @Override
     public void run() {
-        int[] currArray = IntOps.getIntArray();
+        int[] currArray = IntOpsUtility.getIntArray();
         for (int i = 0; i < 10; i++) {
             if (currArray[i] != 5) {
                 synchronized (this) {
                     try {
                         setGResult(countG(currArray[i]));
                         System.out.println("Result of g(x) in " + i + " position: " + gResult);
-                        IntOps.decrementCounter();
+                        IntOpsUtility.decrementCounter();
                         wait();
-                        if (IntOps.isStop()) {
+                        if (IntOpsUtility.isStop()) {
                             break;
                         }
-                        if (IntOps.isRestart()) {
+                        if (IntOpsUtility.isRestart()) {
                             i = -1;
-                            currArray = IntOps.getIntArray();
+                            currArray = IntOpsUtility.getIntArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -28,7 +28,7 @@ public class IntTrialG extends Thread {
             } else {
                 System.out.println("\nvalue " + currArray[i] + " is incorrect for g(x) function\n");
                 setGResult(100000000);
-                IntOps.decrementCounter();
+                IntOpsUtility.decrementCounter();
                 synchronized (this) {
                     try {
                         wait();
@@ -39,7 +39,7 @@ public class IntTrialG extends Thread {
             }
         }
         interrupt();
-        System.out.println("G thread for integer value stopped  " + interrupted());
+        System.out.println("G thread for integer value stopped");
     }
 
     public static int countG(int x) {

@@ -1,6 +1,6 @@
 package lab1.compfunc.Advanced.DoubleOps;
 
-public class DoubleOps {
+public class DoubleOpsUtility {
     private static double[] doubleArray = {1.6, 6.0, 4.3, 8.23, 12.22, 44.15, 23.7, 9.88, 11.44, 30.1};
     private static int counter = 2;
 
@@ -9,7 +9,7 @@ public class DoubleOps {
     }
 
     public static synchronized void setRestart(boolean restart) {
-        DoubleOps.restart = restart;
+        DoubleOpsUtility.restart = restart;
     }
 
     private static boolean restart = false;
@@ -22,7 +22,7 @@ public class DoubleOps {
 //        for (int i = 0; i < newArray.length; i++) {
 
 //        }
-        DoubleOps.doubleArray = newArray;
+        DoubleOpsUtility.doubleArray = newArray;
     }
 
     public static boolean isStop() {
@@ -30,7 +30,7 @@ public class DoubleOps {
     }
 
     public static void setStop(boolean stop) {
-        DoubleOps.stop = stop;
+        DoubleOpsUtility.stop = stop;
     }
 
     private static boolean stop = false;

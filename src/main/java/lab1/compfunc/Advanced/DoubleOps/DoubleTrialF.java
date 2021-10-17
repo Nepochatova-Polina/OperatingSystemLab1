@@ -5,21 +5,21 @@ public class DoubleTrialF extends Thread {
 
     @Override
     public void run() {
-        double[] currArray = DoubleOps.getDoubleArray();
+        double[] currArray = DoubleOpsUtility.getDoubleArray();
         for (int i = 0; i < 10; i++) {
             if (currArray[i] != 2) {
                 synchronized (this) {
                     try {
                         setFResult(countF(currArray[i]));
                         System.out.println("Result of f(x) in " + i + " position: " + fResult);
-                        DoubleOps.decrementCounter();
+                        DoubleOpsUtility.decrementCounter();
                         wait();
-                        if (DoubleOps.isStop()) {
+                        if (DoubleOpsUtility.isStop()) {
                             break;
                         }
-                        if (DoubleOps.isRestart()) {
+                        if (DoubleOpsUtility.isRestart()) {
                             i = -1;
-                            currArray = DoubleOps.getDoubleArray();
+                            currArray = DoubleOpsUtility.getDoubleArray();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -31,7 +31,7 @@ public class DoubleTrialF extends Thread {
             }
         }
         interrupt();
-        System.out.println("F thread for double value stopped " + interrupted());
+        System.out.println("F thread for double value stopped ");
     }
 
     public static double countF(double x) {

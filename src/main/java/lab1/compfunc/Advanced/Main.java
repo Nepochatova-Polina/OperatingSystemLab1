@@ -6,10 +6,8 @@ import lab1.compfunc.Advanced.DoubleOps.DoubleTrialF;
 import lab1.compfunc.Advanced.DoubleOps.DoubleTrialG;
 import lab1.compfunc.Advanced.IntOps.IntTrialF;
 import lab1.compfunc.Advanced.IntOps.IntTrialG;
-import lab1.compfunc.Advanced.Message.KeyStopClass;
+import lab1.compfunc.Advanced.Message.StopByKey;
 import lab1.compfunc.Advanced.Message.PeriodicMessage;
-
-import javax.swing.*;
 
 public class Main {
     public static final IntTrialF intFThread = new IntTrialF();
@@ -21,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         PeriodicMessage currMess = new PeriodicMessage();
-        KeyStopClass keymess = new KeyStopClass();
+        StopByKey keymess = new StopByKey();
 
         intBinThread.start();
         intFThread.start();
